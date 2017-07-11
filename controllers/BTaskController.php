@@ -10,4 +10,8 @@ class BTaskController extends BaseController
 {
 	public $modelClass = 'wkapi\models\BTask';
 
+	public function actionIndex(){
+		return $this->renderJson(['yes','or','no'],)
+	}
+
 }
