@@ -52,6 +52,7 @@ return [
                     'controller' => ['v1/goods','users','b-task'],
                     'extraPatterns' => [
                             'GET index' => 'index',
+                            'GET test' => 'test',
                     //     'POST login' =>'login',
                     //     'POST insert' => 'user',
                     //     'GET user-profile' => 'user-profile',
