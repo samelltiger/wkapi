@@ -50,7 +50,8 @@ return [
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => ['v1/goods','users','b-task'],
-                    // 'extraPatterns' => [
+                    'extraPatterns' => [
+                            'GET index' => 'index',
                     //     'POST login' =>'login',
                     //     'POST insert' => 'user',
                     //     'GET user-profile' => 'user-profile',
@@ -62,7 +63,7 @@ return [
                     //     // 'GET user/<username:\.+>' => 'get-one',               //用于测试
                     //     'POST signin'  =>'signin',    //增加一个用户  (注册)
                     //     'POST login'   =>"login",     //登录
-                    // ],
+                    ],
                 ],
                 // [
                 //     'class' => 'yii\rest\UrlRule',
