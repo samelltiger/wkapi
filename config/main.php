@@ -51,7 +51,7 @@ return [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => ['v1/goods','users','b-task'],
                     'extraPatterns' => [
-                            'GET index' => 'index',
+                            'GET ccc' => 'ccc',
                             'GET test' => 'test',
                     //     'POST login' =>'login',
                     //     'POST insert' => 'user',
