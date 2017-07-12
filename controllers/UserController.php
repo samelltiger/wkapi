@@ -50,19 +50,6 @@ class UserController extends BaseController
 	// 		]);
 	// }
 
-	public function actions()
-    {
-        return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
-            ],
-            // 'captcha' => [
-            //     'class' => 'yii\captcha\CaptchaAction',
-            //     'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            // ],
-        ];
-    }
-
 	// public function actionTest(){
 	// 	return ['content'=>Yii::$app->request->post('login')['email']];
 	// }
