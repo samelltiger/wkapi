@@ -1,6 +1,7 @@
 <?php
 namespace wkapi\models;
 
+
 use yii\db\ActiveRecord;
 
 class User extends ActiveRecord
@@ -10,6 +11,9 @@ class User extends ActiveRecord
 		return "user";
 	}
 
+	public static function getUserInfo($type , $for){
+		return self::findOne([$type=>$for]);
+	}
 	
 }
 

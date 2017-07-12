@@ -21,7 +21,7 @@ class BaseController extends ActiveController
 	* @$code  返回的状态码
 	* @$message 错误信息
 	*/
-	public function renderJson( $data , $state=1 , $code=200 , $message=null ){
+	public static function renderJson( $data , $state=1 , $code=200 , $message=null ){
 		$response =[
 			'success' => $state?"success":"fail",
 			'code' 	  => $code,
@@ -29,6 +29,16 @@ class BaseController extends ActiveController
 			'data'	  => $data,
 		];
 		return $response;
+	}
+
+	public function getModelOneStrErrors($model){
+		if($model->hasErrors()){
+			$errors = $model->getFirstErrors();
+			foreach ($errors as $value) {
+				return $value;
+			}
+		}
+		return false;
 	}
 
 }

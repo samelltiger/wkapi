@@ -10,4 +10,6 @@ class UserRoleController extends BaseController
 {
 	public $modelClass = 'wkapi\models\UserRole';
 
+	
+
 }

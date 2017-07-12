@@ -40,7 +40,7 @@ return [
             ],
         ],
         'errorHandler' => [
-            'errorAction' => 'site/error',
+            'errorAction' => 'user/error',
         ],
         'urlManager' =>[
             'enablePrettyUrl' => true,
@@ -49,10 +49,11 @@ return [
             'rules' => [
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => ['v1/goods','users','b-task'],
+                    'controller' => ['user','b-task'],
                     'extraPatterns' => [
                             'GET ccc' => 'ccc',
                             'GET test' => 'test',
+                            'POST signin' => 'signin',
                     //     'POST login' =>'login',
                     //     'POST insert' => 'user',
                     //     'GET user-profile' => 'user-profile',
@@ -60,7 +61,7 @@ return [
                     //     "GET test/<id:\d+>" => 'test',               //用于测试
                     //     'GET <id:\d+>' => 'get-one',               //用于测试
                     //     // 'GET /' => 'get-all',               //用于测试
-                    //     "GET <email:[\w\d_-]+@[\w\d_-]+(\.[\w\d_-]+)+$>" => 'get-one',
+                        "GET <email:[\w\d_-]+@[\w\d_-]+(\.[\w\d_-]+)+$>" => 'get-one',
                     //     // 'GET user/<username:\.+>' => 'get-one',               //用于测试
                     //     'POST signin'  =>'signin',    //增加一个用户  (注册)
                     //     'POST login'   =>"login",     //登录
