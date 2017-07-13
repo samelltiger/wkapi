@@ -31,6 +31,7 @@ class BaseController extends ActiveController
 		return $response;
 	}
 
+	// 获取模型验证的第一条错误
 	public function getModelOneStrErrors($model){
 		if($model->hasErrors()){
 			$errors = $model->getFirstErrors();
@@ -41,6 +42,64 @@ class BaseController extends ActiveController
 		return false;
 	}
 
+	public function is_email($value){
+		return preg_match('/[\w\d_-]+@[\w\d_-]+(\.[\w\d_-]+)+$/', $value);
+	}
+
+	public function is_id($value){
+		return preg_match('/[\d]+$/', $value);
+	}
+
+	/**
+	* 判读传来的值是否合法
+	* @param mixed $value 值
+	* @return int 0:id,1:email,2：数据不合法
+	*/
+	public function is_email_or_id($value){
+		if($this->is_id($value))
+			return 0;
+		elseif($this->is_email($value))
+			return 1;
+		else
+			return 2;
+	}
+
+	/**
+	* 递归读取数组的深度
+	* @param mixed $value 值
+	* @return array 返回array($max,$min)
+	*/
+	public function array_deep($arr){
+		$i = 0;
+		$max = 0;
+		$min = 100000000;
+		if(!is_array($arr))
+			return 0;
+
+		foreach ($arr as $v) {
+			if(!is_array($v)){
+				$i = 1;
+			}else{
+				$i = 1+max($this->array_deep($v)) ;
+			}
+			if($max < $i)
+				$max = $i;
+
+			if($min > $i ){
+				$min = $i;
+			}
+		}
+		return [$max,$min];
+	}
+
+	public function loadModelValue($obj,$modelname,$arr_str){
+		$arr=[];
+		foreach ($obj as $key => $value) {
+			if( in_array($key, $arr_str) )
+				$arr[$modelname][$key] = $value;
+		}
+		return $arr;
+	}
 }
 
 ?>

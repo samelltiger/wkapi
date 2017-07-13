@@ -11,9 +11,15 @@ class User extends ActiveRecord
 		return "user";
 	}
 
-	public static function getUserInfo($type , $for){
-		return self::findOne([$type=>$for]);
+	public static function getUserInfo($type , $forv , $state=1){
+		return self::find()->
+			where($type.'=:parm1'  /*$type.'=:parm1 and '.'state='.$state*/,[':parm1'=>$forv])->one();
 	}
+
+	public static function setPassword($password)
+    {
+        return md5($password);
+    }
 	
 }
 

@@ -21,7 +21,8 @@ class SignForm extends Model
 			['email','email',/*'message'=>
 				BaseController::renderJson([],0,210,'请输入正确的email')*/],
 			['email','verifyEmail'],
-			['is_admin','boolean']
+			['is_admin','boolean'],
+			['password','string','min'=>6, 'max'=>'16'],
 		];
 	}
 
