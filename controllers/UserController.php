@@ -116,31 +116,77 @@ class UserController extends BaseController
 				$model->password = '1234567';
 			}
 
-			$self_email = 0; 	//标记它是否改了email
-			if( isset($signform['email']) && $this->is_email($signform['email'])){
-				if($signform['email'] == $user->email )
-					$self_email = 1;
-			}
-			// var_dump($signform['email'] == $user->email);die;
+			// $self_email = 1; 	//标记它是否sheemail
+			if( isset($signform['email']) ){
+				if( !$this->is_email( $signform['email'] ) )
+					return BaseController::renderJson([],0,210,'邮箱格式不正确');
 
-			if($model->validate() || $self_email ){
-				!$self_email ? ($user->email = $model->email):0;
+
+				// if($signform['email'] == $user->email )
+				// 	$self_email = 0;
+			}
+			// var_dump($self_email);die;
+
+
+			$model->validate(); //开始验证
+
+			if( $model->hasErrors() ){  //如果有错误，
+				$errors = $model->getErrors();
+				$has_email_in_errors = array_key_exists('email',$errors);
+				// print_r($errors);die;
+				if( $has_email_in_errors && count($errors)==1 ){
+					if($user->id == $model->_user->id){
+						$user->username = $model->username;
+						$user->is_admin = $model->is_admin;
+						if( $has_set_password ){	
+							$user->password = User::setPassword($model->password);
+						}
+						if($user->save())
+							return BaseController::renderJson([User::findOne($user_id)],1,200);
+					}else{
+						return BaseController::renderJson([],0,210,'邮箱已被使用');
+					}
+				}else{
+					$str = count($errors)>1 ? (call_user_func( function($errors){
+											$i = 0;
+											foreach ($errors as $value) {
+												if($i++)
+													return $value[0];
+											}
+										},$errors) ) : $this->getModelOneStrErrors($model);
+
+					return BaseController::renderJson([],0,210,$str?$str:'参数不合法');
+				}
+				// print_r($errors);die;
+			}else{
+				$user->email = $model->email;
 				$user->username = $model->username;
 				$user->is_admin = $model->is_admin;
 				if( $has_set_password ){	
 					$user->password = User::setPassword($model->password);
 				}
-				//保存
 				if($user->save())
 					return BaseController::renderJson([User::findOne($user_id)],1,200);
-				else{
-					return BaseController::renderJson([],0,404,'修改信息保存失败');
-
-				}
-			}else{
-				$str = $this->getModelOneStrErrors($model);
-				return BaseController::renderJson([],0,210,$str?$str:'参数不合法');
 			}
+
+			// if($model->validate() || $self_email ){
+			// 	$self_email ? ($user->email = $model->email):0;
+			// 	$user->username = $model->username;
+			// 	$user->is_admin = $model->is_admin;
+			// 	if( $has_set_password ){	
+			// 		$user->password = User::setPassword($model->password);
+			// 	}
+			// 	//保存
+			// 	if($user->save())
+			// 		return BaseController::renderJson([User::findOne($user_id)],1,200);
+			// 	else{
+			// 		return BaseController::renderJson([],0,404,'修改信息保存失败');
+
+			// 	}
+			// }else{
+			// 	$str = $this->getModelOneStrErrors($model);
+			// 	return BaseController::renderJson([],0,210,$str?$str:'参数不合法');
+			// }
 		}
 	}
 }
