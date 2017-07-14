@@ -30,8 +30,11 @@ class SignForm extends Model
 	public function verifyEmail( $attribute , $params){
 		if(!$this->hasErrors()){
 			$this->getAccountByemil();
-			if( $this->_user )
+			// print_r($this->_user);die;
+			if( $this->_user ){
 				$this->addError($attribute,"邮箱已被使用");
+				return false;
+			}
 		}
 	}
 

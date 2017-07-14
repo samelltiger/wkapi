@@ -116,8 +116,15 @@ class UserController extends BaseController
 				$model->password = '1234567';
 			}
 
-			if($model->validate()){
-				$user->email = $model->email;
+			$self_email = 0; 	//标记它是否改了email
+			if( isset($signform['email']) && $this->is_email($signform['email'])){
+				if($signform['email'] == $user->email )
+					$self_email = 1;
+			}
+			// var_dump($signform['email'] == $user->email);die;
+
+			if($model->validate() || $self_email ){
+				!$self_email ? ($user->email = $model->email):0;
 				$user->username = $model->username;
 				$user->is_admin = $model->is_admin;
 				if( $has_set_password ){	
