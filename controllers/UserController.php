@@ -66,16 +66,18 @@ class UserController extends BaseController
 			return BaseController::renderJson([],0,210,'数据不合法');
 		}
 
-		$counts = array_count_values($arr);
-		// print_r($counts);die;
+		$counts = array_count_values($arr);		//
+		
 		if(  isset($counts[0])&&$counts[0] == count($arr) ||  isset($counts[1])&&$counts[1] == count($arr) ){
 			if(isset($counts[0]) && $counts[0]!=0){
-				if(User::updateAll(['state'=>0],['id'=>$data]))
+				$state = \Yii::$app->db->createCommand('UPDATE user set state= if(state=1,0,1) where id in ('.implode(', ', $data).')')->execute();
+				if($state)
 					return BaseController::renderJson([$data],1,200,'删除成功');
 			}
 
 			if(isset($counts[1]) && $counts[1]!=0){
-				if(User::updateAll(['state'=>0],['email'=>$data]))
+				$state = \Yii::$app->db->createCommand("UPDATE user set state= if(state=1,0,1) where email in ('".implode("', '", $data)."')")->execute();
+				if($state)
 					return BaseController::renderJson([$data],1,200,'删除成功');
 			}
 			return BaseController::renderJson([],0,200,'操作失败，请勿重复执行该动作');
