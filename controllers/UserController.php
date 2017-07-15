@@ -33,7 +33,7 @@ class UserController extends BaseController
 				return UserController::renderJson([],0,404,'没有此用户');
 		}
 
-		return UserController::renderJson([],0,210,'参数不合法');
+		return UserController::renderJson([],0,310,'参数不合法');
 	}
 
 	//添加一个用户
@@ -48,7 +48,7 @@ class UserController extends BaseController
 		}
 
 		$str = $this->getModelOneStrErrors($model);
-		return BaseController::renderJson([],0,210,$str?$str:'参数不合法');
+		return BaseController::renderJson([],0,310,$str?$str:'参数不合法');
 	}
 
 	//删除用户，$post_data['data']是一个一维数组，表示要删除的用户id或邮箱
@@ -58,12 +58,12 @@ class UserController extends BaseController
 
 		list($max,$min) =  $this->array_deep($data);  	//获取数组的维数
 		if(!($max==$min && $max==1)){		//判读是否为一维数组
-			return BaseController::renderJson([],0,210,'数据不合法');
+			return BaseController::renderJson([],0,310,'数据不合法');
 		}
 
 		$arr = array_map([$this,'is_email_or_id'], $data);//对传来的数据进行验证（只能是 id、email）
 		if(in_array(2, $arr)){		//判断除了id、email，是否还有其他非法字符
-			return BaseController::renderJson([],0,210,'数据不合法');
+			return BaseController::renderJson([],0,310,'数据不合法');
 		}
 
 		$counts = array_count_values($arr);		//
@@ -80,9 +80,9 @@ class UserController extends BaseController
 				if($state)
 					return BaseController::renderJson([$data],1,200,'删除成功');
 			}
-			return BaseController::renderJson([],0,200,'操作失败，请勿重复执行该动作');
+			return BaseController::renderJson([],0,311,'操作失败，请勿重复执行该动作');
 		}else{
-			return BaseController::renderJson([],0,210,'数据不合法');
+			return BaseController::renderJson([],0,310,'数据不合法');
 		}
 	}
 
@@ -91,7 +91,7 @@ class UserController extends BaseController
 		$post_data = $this->post();
 
 		if( !(  isset($get_data['user_id']) && isset($post_data['SignForm'])  ) )
-			return BaseController::renderJson([],0,210,'数据不合法');
+			return BaseController::renderJson([],0,310,'数据不合法');
 
 		$user_id = $get_data['user_id'];
 		$user = User::findOne($user_id);
@@ -120,7 +120,7 @@ class UserController extends BaseController
 
 			if( isset($signform['email']) ){
 				if( !$this->is_email( $signform['email'] ) )
-					return BaseController::renderJson([],0,210,'邮箱格式不正确');
+					return BaseController::renderJson([],0,310,'邮箱格式不正确');
 			}
 
 			$model->validate(); //开始验证
@@ -138,7 +138,7 @@ class UserController extends BaseController
 						if($user->save())
 							return BaseController::renderJson([User::findOne($user_id)],1,200);
 					}else{
-						return BaseController::renderJson([],0,210,'邮箱已被使用');
+						return BaseController::renderJson([],0,310,'邮箱已被使用');
 					}
 				}else{
 					$str = count($errors)>1 ? (call_user_func( function($errors){
@@ -150,7 +150,7 @@ class UserController extends BaseController
 										},$errors) ) : $this->getModelOneStrErrors($model);
 										//错误大于1的话，就获取处理emial的其他的错误
 
-					return BaseController::renderJson([],0,210,$str?$str:'参数不合法');
+					return BaseController::renderJson([],0,310,$str?$str:'参数不合法');
 				}
 			}else{
 				$user->email = $model->email;

@@ -2,7 +2,6 @@
 namespace wkapi\models;
 
 use yii\base\Model;
-use wkapi\controllers\common\BaseController;
 use wkapi\models\UserIdentity;
 
 

@@ -7,7 +7,7 @@ class Group extends ActiveRecord
 {
 	
 	public static function tablename(){
-		return "group";
+		return "groups";
 	}
 
 	
