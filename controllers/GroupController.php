@@ -33,8 +33,8 @@ class GroupController extends BaseController
 		$post = $this->post();
 		$model = new GroupForm();
 		if($model->load($post) && $model->validate()){
-			if(  $group = $model->save())
-				return static::renderJson([Group::findOne($group->id)],1,200);
+			if(  $group = $model->save() )
+				return static::renderJson([Group::findOne(['id'=>$group->id])],1,200);
 				
 			return static::renderJson([],0,200,'保存失败！');
 		}
@@ -75,7 +75,7 @@ class GroupController extends BaseController
 			return static::renderJson([],0,310,'数据不合法');
 
 		$group_id = $this->is_id($get_data['group_id'])?$get_data['group_id']:-1;
-		$group = Group::findOne($group_id);
+		$group = Group::findOne(['id'=>$group_id]);
 		if( !$group )
 			return static::renderJson([],0,404,'没有此组织');
 
