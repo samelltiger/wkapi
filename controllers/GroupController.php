@@ -46,14 +46,17 @@ class GroupController extends BaseController
 	//删除组织，$post_data['data']是一个一维数组，表示要删除的组织id
 	public function actionDel(){
 		$post_data = $this->post();
-		$data = $post_data['data'];
+		if( isset($post_data['data']))
+			$data = $post_data['data'];
+		else 
+			return static::renderJson([],0,310,'数据不合法');
 
 		list($max,$min) =  $this->array_deep($data);  	//获取数组的维数
 		if(!($max==$min && $max==1)){		//判读是否为一维数组
 			return static::renderJson([],0,310,'数据不合法');
 		}
 
-		$arr = array_map([$this,'is_id'], $data);//对传来的数据进行验证（只能是 id、email）
+		$arr = array_map([$this,'is_id'], $data);   //对传来的数据进行验证（只能是 id、email）
 		if(in_array(0, $arr)){		//判断除了id、email，是否还有其他非法字符
 			return static::renderJson([],0,310,'数据不合法');
 		}
@@ -101,45 +104,6 @@ class GroupController extends BaseController
 				if( $group->save() )
 					return static::renderJson([$group]);
 			}
-
-
-			// if( $model->hasErrors() ){  //如果有错误，
-			// 	$errors = $model->getErrors();  //获取验证的错误信息
-			// 	$has_email_in_errors = array_key_exists('email',$errors); //如果email在错误信息中
-			// 	if( $has_email_in_errors && count($errors)==1 ){	//并且错误的个数大于1
-			// 		if($user->id == $model->_user->id){
-			// 			$user->username = $model->username;
-			// 			$user->is_admin = $model->is_admin;
-			// 			if( $has_set_password ){	
-			// 				$user->password = User::setPassword($model->password);
-			// 			}
-			// 			if($user->save())
-			// 				return static::renderJson([User::findOne($user_id)],1,200);
-			// 		}else{
-			// 			return static::renderJson([],0,310,'邮箱已被使用');
-			// 		}
-			// 	}else{
-			// 		$str = count($errors)>1 ? (call_user_func( function($errors){
-			// 								$i = 0;
-			// 								foreach ($errors as $value) {
-			// 									if($i++)
-			// 										return $value[0];
-			// 								}
-			// 							},$errors) ) : $this->getModelOneStrErrors($model);
-			// 							//错误大于1的话，就获取处理emial的其他的错误
-
-			// 		return static::renderJson([],0,310,$str?$str:'参数不合法');
-			// 	}
-			// }else{
-			// 	$user->email = $model->email;
-			// 	$user->username = $model->username;
-			// 	$user->is_admin = $model->is_admin;
-			// 	if( $has_set_password ){	
-			// 		$user->password = User::setPassword($model->password);
-			// 	}
-			// 	if($user->save())
-			// 		return static::renderJson([User::findOne($user_id)],1,200);
-			// }
 		}
 	}
 }

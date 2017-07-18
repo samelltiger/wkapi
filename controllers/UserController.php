@@ -54,7 +54,10 @@ class UserController extends BaseController
 	//删除用户，$post_data['data']是一个一维数组，表示要删除的用户id或邮箱
 	public function actionDel(){
 		$post_data = $this->post();
-		$data = $post_data['data'];
+		if( isset($post_data['data']))
+			$data = $post_data['data'];
+		else 
+			return static::renderJson([],0,310,'数据不合法');
 
 		list($max,$min) =  $this->array_deep($data);  	//获取数组的维数
 		if(!($max==$min && $max==1)){		//判读是否为一维数组

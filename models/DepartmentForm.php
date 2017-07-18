@@ -3,16 +3,17 @@ namespace wkapi\models;
 
 use yii\base\Model;
 
-use wkapi\models\Group;
+use wkapi\models\Department;
 use wkapi\models\lib\ValidateFun as VFun;
 
 /**
 * 
 */
-class GroupForm extends Model
+class DepartmentForm extends Model
 {
 	
 	public $user_id;
+	public $group_id;
 	public $name;
 	public $desc;
 	public $state=0;
@@ -20,18 +21,19 @@ class GroupForm extends Model
 
 	public function attributeLabels(){
 		return [
-			'user_id' => '用户',
-			'name'	  => '组织名',
-			'desc' 	  => '组织描述',
+			'user_id' => '负责人',
+			'group_id' => '所属组织',
+			'name'	  => '部门名',
+			'desc' 	  => '部门描述',
 		];
 	}
 
 	public function rules(){
 		return [
-			[['user_id','name'],'required'],
-			['user_id','is_id'],
+			[['user_id','group_id','name'],'required'],
+			[['user_id','group_id'] , 'is_id'],
 			['name','string','min'=>2,'max'=>15],
-			['desc','string','max'=>'350'],
+			['desc','string','max'=>'125'],
 			['state','boolean'],
 		];
 	}
@@ -45,8 +47,9 @@ class GroupForm extends Model
 	}
 
 	public function save(){
-		$group = new Group();
+		$group = new Department();
 		$group->user_id = $this->user_id;
+		$group->group_id = $this->group_id;
 		$group->name = $this->name;
 		$group->desc = $this->desc;
 		if($group->save()){

@@ -9,7 +9,6 @@ class Group extends ActiveRecord
 	public static function tablename(){
 		return "groups";
 	}
-
 	
 }
 

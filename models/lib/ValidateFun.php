@@ -1,5 +1,5 @@
 <?php 
-namespace wkapi\models;
+namespace wkapi\models\lib;
 
 /**
 * 用于验证的函数库
