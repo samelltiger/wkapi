@@ -64,6 +64,28 @@ class BaseController extends ActiveController
 			return 2;
 	}
 
+	//递归判断所有的值是否为id
+	public function is_id_map($arr){
+		$state = true;
+
+		if(is_array($arr)){
+			foreach ($arr as $v) {
+				if(is_array($v)){
+					if ( !$this->is_id_map($v) ) 
+						return false ;
+				}
+				else{
+					if( !$this->is_id($v) ) 
+						return false;
+				}
+			}
+			return true;
+		}else{
+			return $this->is_id($arr);
+		}
+	}
+
+
 	/**
 	* 递归读取数组的深度
 	* @param mixed $value 值

@@ -3,7 +3,6 @@ namespace wkapi\models;
 
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
-use yii\helpers\BaseArrayHelper;
 
 use wkapi\models\Group;
 use wkapi\models\User;
@@ -17,8 +16,8 @@ class UserGroup extends ActiveRecord
 	}
 
 	//获取指定用户所在的所有组织信息
-	public static function getUserOfGroups($user_id){
-		$items = static::findAll(['user_id'=>$user_id]);
+	public static function getUserOfGroups($user_id,$state=1){
+		$items = static::findAll(['user_id'=>$user_id,'state'=>$state]);
 		if( !$items )
 			return null;
 		$ids = ArrayHelper::getColumn($items,'group_id');
@@ -27,8 +26,8 @@ class UserGroup extends ActiveRecord
 	}
 
 	//获取指定组织的所有用户信息
-	public static function getUsersInGroup($group_id){
-		$items = static::findAll(['group_id'=>$group_id]);
+	public static function getUsersInGroup($group_id , $state=1){
+		$items = static::findAll(['group_id'=>$group_id ,'state'=>$state]);
 		if( !$items )
 			return null;
 		$ids = ArrayHelper::getColumn($items,'user_id');
@@ -63,8 +62,9 @@ class UserGroup extends ActiveRecord
 			return $data;
 		}
 		return null;
-
 	}
+
+	
 	
 }
 
