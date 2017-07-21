@@ -14,11 +14,11 @@ use wkapi\models\UserDepartmentForm;
 class UserDepartmentController extends BaseController
 {
 	public $modelClass = 'wkapi\models\UserDepartment';
-	
+
 	public function actions(){
 		return [
 			'index'=>[
-				'class'=>'wkapi\actions\Testa',
+				'class'=>'wkapi\actions\IndexAction',
                 'modelClass' => $this->modelClass,
 			],
 		];

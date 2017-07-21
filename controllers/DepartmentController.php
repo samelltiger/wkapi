@@ -16,7 +16,7 @@ class DepartmentController extends BaseController
 	public function actions(){
 		return [
 			'index'=>[
-				'class'=>'wkapi\actions\Testa',
+				'class'=>'wkapi\actions\IndexAction',
                 'modelClass' => $this->modelClass,
 			],
 		];
