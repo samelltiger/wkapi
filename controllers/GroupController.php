@@ -13,6 +13,15 @@ class GroupController extends BaseController
 {
 	public $modelClass = 'wkapi\models\Group';
 
+	public function actions(){
+		return [
+			'index'=>[
+				'class'=>'wkapi\actions\Testa',
+                'modelClass' => $this->modelClass,
+			],
+		];
+	}
+	
 	//通过id获取一个组织
 	public function actionGetOne(){
 		$get = $this->get();

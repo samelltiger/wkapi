@@ -14,6 +14,15 @@ class UserController extends BaseController
 {
 	public $modelClass = 'wkapi\models\User';
 
+	public function actions(){
+		return [
+			'index'=>[
+				'class'=>'wkapi\actions\Testa',
+                'modelClass' => $this->modelClass,
+			],
+		];
+	}
+
 	//通过id或邮箱获取用户
 	public function actionGetOne(){
 		$get = $this->get();

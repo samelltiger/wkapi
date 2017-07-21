@@ -10,4 +10,12 @@ class RoleRuleController extends BaseController
 {
 	public $modelClass = 'wkapi\models\RoleRule';
 
+	public function actions(){
+		return [
+			'index'=>[
+				'class'=>'wkapi\actions\Testa',
+                'modelClass' => $this->modelClass,
+			],
+		];
+	}
 }

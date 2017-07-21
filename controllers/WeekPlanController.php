@@ -10,4 +10,12 @@ class WeekPlanController extends BaseController
 {
 	public $modelClass = 'wkapi\models\WeekPlan';
 
+	public function actions(){
+		return [
+			'index'=>[
+				'class'=>'wkapi\actions\Testa',
+                'modelClass' => $this->modelClass,
+			],
+		];
+	}
 }

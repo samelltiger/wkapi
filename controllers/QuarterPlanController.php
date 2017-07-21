@@ -10,4 +10,12 @@ class QuarterPlanController extends BaseController
 {
 	public $modelClass = 'wkapi\models\QuarterPlan';
 
+	public function actions(){
+		return [
+			'index'=>[
+				'class'=>'wkapi\actions\Testa',
+                'modelClass' => $this->modelClass,
+			],
+		];
+	}
 }

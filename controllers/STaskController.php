@@ -10,4 +10,12 @@ class STaskController extends BaseController
 {
 	public $modelClass = 'wkapi\models\STask';
 
+	public function actions(){
+		return [
+			'index'=>[
+				'class'=>'wkapi\actions\Testa',
+                'modelClass' => $this->modelClass,
+			],
+		];
+	}
 }

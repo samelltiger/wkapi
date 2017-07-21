@@ -15,6 +15,15 @@ class UserGroupController extends BaseController
 {
 	public $modelClass = 'wkapi\models\UserGroup';
 
+	public function actions(){
+		return [
+			'index'=>[
+				'class'=>'wkapi\actions\Testa',
+                'modelClass' => $this->modelClass,
+			],
+		];
+	}
+	
 	//通过用户和组织相关信息
 	public function actionGetOne(){
 		$get = $this->get();

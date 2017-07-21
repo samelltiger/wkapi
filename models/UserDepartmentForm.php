@@ -27,7 +27,7 @@ class UserDepartmentForm extends Model
 
 	public function rules(){
 		return [
-			[['user_id','group_id'，'department_id'],'required'],
+			[['user_id','group_id','department_id'],'required'],
 			[['user_id','group_id','department_id'],'is_id'],
 		];
 	}

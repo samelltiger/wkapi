@@ -10,4 +10,12 @@ class QuarterReportController extends BaseController
 {
 	public $modelClass = 'wkapi\models\QuarterReport';
 
+	public function actions(){
+		return [
+			'index'=>[
+				'class'=>'wkapi\actions\Testa',
+                'modelClass' => $this->modelClass,
+			],
+		];
+	}
 }

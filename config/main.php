@@ -57,7 +57,7 @@ return [
                             ],
                     'extraPatterns' => [
                             'GET ccc' => 'ccc',         //测试
-                            'GET test' => 'test',       //测试
+                            'GET test' => 'testa',       //测试
                             // 'GET ' => 'get-all',
                             "GET <email:[\w\d_-]+@[\w\d_-]+(\.[\w\d_-]+)+$>" => 'get-one',
                             'GET <id:\d+>' => 'get-one',

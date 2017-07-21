@@ -10,4 +10,12 @@ class TaskCheckController extends BaseController
 {
 	public $modelClass = 'wkapi\models\TaskCheck';
 
+	public function actions(){
+		return [
+			'index'=>[
+				'class'=>'wkapi\actions\Testa',
+                'modelClass' => $this->modelClass,
+			],
+		];
+	}
 }

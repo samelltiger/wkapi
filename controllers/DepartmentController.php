@@ -13,6 +13,15 @@ class DepartmentController extends BaseController
 {
 	public $modelClass = 'wkapi\models\Department';
 
+	public function actions(){
+		return [
+			'index'=>[
+				'class'=>'wkapi\actions\Testa',
+                'modelClass' => $this->modelClass,
+			],
+		];
+	}
+
 	//获取指定组织的所有部门
 	public function actionGetOne(){
 		$get = $this->get();

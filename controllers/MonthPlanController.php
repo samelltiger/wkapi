@@ -10,4 +10,12 @@ class MonthPlanController extends BaseController
 {
 	public $modelClass = 'wkapi\models\MonthPlan';
 
+	public function actions(){
+		return [
+			'index'=>[
+				'class'=>'wkapi\actions\Testa',
+                'modelClass' => $this->modelClass,
+			],
+		];
+	}
 }
