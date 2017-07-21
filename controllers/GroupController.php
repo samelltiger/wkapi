@@ -16,13 +16,21 @@ class GroupController extends BaseController
 	//通过id获取一个组织
 	public function actionGetOne(){
 		$get = $this->get();
-		if( isset( $get['id'] ) ){
+		if( isset( $get['id'] ) && !isset($get['type']) ){
 			$data = Group::findOne(['id' , $get['id']] /*,isset( $get['state'] )? 0 : 1*/);
-			// print_r($data);die;
 			if( $data )
 				return static::renderJson([$data],1,200);
 			else
 				return static::renderJson([],0,404,'没有此组织');
+		}elseif( isset( $get['id'] ) && isset($get['type']) ){
+			if( $this->is_id( $get['id'] ) ){
+				$my_group = Group::findAll(['user_id'=>$get['id']]);
+				if( $my_group ){
+					return static::renderJson([$my_group]);
+				}
+				
+				return static::renderJson([],0,404,'该用户为创建过任何组织！');
+			}
 		}
 
 		return static::renderJson([],0,310,'参数不合法');
