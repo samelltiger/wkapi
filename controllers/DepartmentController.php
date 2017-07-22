@@ -25,12 +25,18 @@ class DepartmentController extends BaseController
 	//获取指定组织的所有部门
 	public function actionGetOne(){
 		$get = $this->get();
-		if( isset($get['id']) ){
-			$data = Department::findOne(['id' , $get['id']] /*,isset( $get['state'] )? 0 : 1*/);
+		if( isset($get['id']) && !isset( $get['type'] ) ){
+			$data = Department::findOne(['id' => $get['id']] /*,isset( $get['state'] )? 0 : 1*/);
 			if( $data )
 				return static::renderJson([$data],1,200);
 			else
-				return static::renderJson([],0,404,'没有此组织');
+				return static::renderJson([],0,404,'没有该部门');
+		}elseif ( isset($get['id'])  ) {
+			$data = Department::findAll(['group_id' => $get['id']] /*,isset( $get['state'] )? 0 : 1*/);
+			if( $data )
+				return static::renderJson([$data],1,200);
+			else
+				return static::renderJson([],0,404,'此组织没有部门');
 		}
 
 		return static::renderJson([],0,310,'参数不合法');

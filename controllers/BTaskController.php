@@ -19,8 +19,6 @@ class BTaskController extends BaseController
 		];
 	}
 
-	public function actionTest(){
-		return ['content'=>'faefaefa'];
-	}
+	
 
 }
