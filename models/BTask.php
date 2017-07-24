@@ -3,8 +3,11 @@ namespace wkapi\models;
 
 use Yii;
 use yii\db\ActiveRecord;
-use wkapi\models\UserIdenti;
-use wkapi\models\User;
+use yii\helpers\ArrayHelper;
+
+use wkapi\models\BTaskForm;
+use wkapi\models\Department;
+use wkapi\models\UserGroup;
 
 class BTask extends ActiveRecord
 {
@@ -13,19 +16,14 @@ class BTask extends ActiveRecord
 		return "b_task";
 	}
 
-	public function verifypassword($attribute,$param){
-		if(!$this->hasErrors()){
-			$this->getAccount();
-			if(!$this->_account || !$this->validatePassword($this->password))
-				$this->addError($attribute,"邮箱或密码错误！");
-		}
-	}
+	public static function getTasksInGroup($group_id){
+		$users = UserGroup::find()->select('user_id')->where(['group_id'=>$group_id])->distinct()->all();
+		if(!$users)
+			return null;
+		$ids = ArrayHelper::getColumn($users,'user_id');
+		$tasks = static::findAll(['user_id'=>$ids]);
+		return $tasks;
 
-	public function getAccount(){
-		if($this->_account == null){
-			;
-		}
-		return $this->_account;
 	}
 
 	public function getUsers(){

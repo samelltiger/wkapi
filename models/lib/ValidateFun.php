@@ -56,6 +56,18 @@ class ValidateFun
 		}
 		return [$max,$min];
 	}
+
+
+	public static function is_date($dateStr){
+		return preg_match("/(\d{2}|\d{4})(?:\-)?([0]{1}\d{1}|[1]{1}[0-2]{1})(?:\-)?([0-2]{1}\d{1}|[3]{1}[0-1]{1})(?:\s)?([0-1]{1}\d{1}|[2]{1}[0-3]{1})(?::)?([0-5]{1}\d{1})(?::)?([0-5]{1}\d{1})/", $dateStr);
+	}
+
+	public static function str2timestamp($str){
+		$arrdate = preg_split("/[\.\/-]/", $str);
+		$arrtime = explode(":", str_replace(" ", ":", $arrdate[2]));
+		$timestamp = mktime($arrtime[1],$arrtime[2],$arrtime[3],$arrdate[1],$arrtime[0],$arrdate[0]);
+		return $timestamp;
+	}
 }
 
 
