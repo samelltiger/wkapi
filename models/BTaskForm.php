@@ -62,9 +62,29 @@ class BTaskForm extends Model
 				$this->addError($attribute,'日期格式出错');
 			}
 			// VFun::str2timestamp($this->$attribute);
-			if( VFun::str2timestamp($this->$attribute) < time()+8*60*60 )
+			if( !$this->hasErrors() && VFun::str2timestamp($this->$attribute) < time()+8*60*60 )
 				$this->addError($attribute,'结束时间必须大于现在');
 		}
+	}
+
+	public function errIsEndDate($issetEndDate){
+			$errors = $this->getErrors();
+			if(\count($errors)>=2||isset($errors['end_date'])&&count($errors['end_date'])>=2)	//如果错误多于两个，则直接返回true
+				return false;
+			if(!\array_key_exists('end_date',$errors) )		//如果错误与不是由end_date引起的，则直接返回
+				return false;
+			// echo $errors['end_date'][0];
+			// var_dump( $errors['end_date'] !=="结束时间必须大于现在");die();
+			// if( $errors['end_date'][0] !=="结束时间必须大于现在" )
+			// 	return false;
+			// return true;
+			if( $issetEndDate && $errors['end_date'][0] =="结束时间必须大于现在"){
+				return false;
+			}else{
+				if($errors['end_date'][0] !=="结束时间必须大于现在")
+					return false;
+				return true;
+			}
 	}
 
 	public function save(){

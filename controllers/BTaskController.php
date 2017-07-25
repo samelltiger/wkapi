@@ -128,7 +128,8 @@ class BTaskController extends BaseController
 
 			$model->validate(); //开始验证
 
-			if( $model->hasErrors() ){
+
+			if( $model->hasErrors() && !$model->errIsEndDate( isset($signform['end_date']) ) ){
 				$str = $this->getModelOneStrErrors($model);
 				return static::renderJson([],0,310,$str?$str:'参数不合法');
 			}else{
