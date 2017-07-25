@@ -6,9 +6,9 @@ use wkapi\controllers\common\BaseController;
 use yii\filters\auth\QueryParamAuth;
 use yii\helpers\ArrayHelper;
 
-class MonthReportController extends BaseController
+class ReportController extends BaseController
 {
-	public $modelClass = 'wkapi\models\MonthReport';
+	public $modelClass = 'wkapi\models\Report';
 
 	public function actions(){
 		return [

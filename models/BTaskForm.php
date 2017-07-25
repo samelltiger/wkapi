@@ -19,6 +19,7 @@ class BTaskForm extends Model
 	public $user_id;
 	public $type_id;
 	public $group_id;
+	public $parent_id;
 	public $desc;
 	public $state=1;
 
@@ -32,6 +33,7 @@ class BTaskForm extends Model
 			'user_id' => "用户",
 			'type_id' => "任务类型",
 			'group_id' => "组织",
+			'parent_id' => "父任务组织",
 			'desc' => "任务描述",
 			'state' => "任务状态",
 		];
@@ -40,7 +42,7 @@ class BTaskForm extends Model
 	public function rules(){
 		return [
 			[['name','end_date','user_id','group_id','type_id',],'required'],
-			[['user_id','type_id','group_id'] , 'is_id'],
+			[['user_id','type_id','group_id','parent_id'] , 'is_id'],
 			['end_date','is_date'],
 			['name','string','min'=>2,'max'=>15],
 			['desc','string','max'=>'125'],
@@ -95,6 +97,7 @@ class BTaskForm extends Model
 		$task->user_id 			= (int)$this->user_id ;
 		$task->group_id 		= (int)$this->group_id ;
 		$task->type_id 			= (int)$this->type_id ;
+		$task->parent_id 		= (int)$this->parent_id ;
 		$task->desc 			= $this->desc ;
 
 		if($task->save()){

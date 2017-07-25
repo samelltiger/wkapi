@@ -6,9 +6,9 @@ use wkapi\controllers\common\BaseController;
 use yii\filters\auth\QueryParamAuth;
 use yii\helpers\ArrayHelper;
 
-class MonthPlanController extends BaseController
+class PlanController extends BaseController
 {
-	public $modelClass = 'wkapi\models\MonthPlan';
+	public $modelClass = 'wkapi\models\Plan';
 
 	public function actions(){
 		return [

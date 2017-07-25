@@ -8,7 +8,6 @@ use yii\helpers\ArrayHelper;
 
 use wkapi\models\BTask;
 use wkapi\models\BTaskForm;
-use wkapi\models\STask;
 
 class BTaskController extends BaseController
 {
@@ -30,21 +29,27 @@ class BTaskController extends BaseController
 		$modelClass = $this->modelClass;
 
 		if( isset($get['id']) && !isset($get['type'])){
-			$task = $modelClass::findOne(['id'=>$get['id']]);
+			$task = $modelClass::findOne(['id'=>$get['id'],'parent_id'=>0]);
+			$child_task = $modelClass::find()->select('*')->where('parent_id ='.$get['id'])->all();
 			if($task)
-				return static::renderJson([$task]);
+				return static::renderJson([$task,$child_task]);
 			return static::renderJson([],0,404,'未找到该任务');
 
 		}elseif (isset($get['id']) && isset($get['type']) && $get['type']==='user'&& isset($get['group_id']) && $this->is_id($get['group_id'])) {
-			$tasks = $modelClass::findAll(['user_id'=>$get['id'],"group_id"=>$get['group_id']]);
-			if($tasks)
-				return static::renderJson([$tasks]);
+			$tasks = $modelClass::findAll(['user_id'=>$get['id'],"group_id"=>$get['group_id'],'parent_id'=>0]);
+			if($tasks){
+				$ids = ArrayHelper::getColumn($tasks,'id');
+
+				$child_tasks = $modelClass::find()->select('*')->where('parent_id in ('.implode( ",",$ids).")")->all();
+				return static::renderJson([$tasks,$child_tasks]);
+			}
+
 			return static::renderJson([],0,404,'未找到此组织中该用户的任务');
 
 		}elseif (isset($get['id']) && isset($get['type']) && $get['type']==='group') {
 			$tasks = BTask::getTasksInGroup((int)$get['id']);
 			if($tasks)
-				return static::renderJson([$tasks]);
+				return static::renderJson($tasks);
 			return static::renderJson([],0,404,'未找到该组织内用户的任务');
 
 		}
@@ -88,7 +93,7 @@ class BTaskController extends BaseController
 		// $ids = STask::find()->select('') ;
 		// print_r($ids);
 		$state = \Yii::$app->db->createCommand('UPDATE b_task SET state=if(state=1,0,1) WHERE id IN ('.implode(', ', $data).')')->execute();
-		$state = \Yii::$app->db->createCommand('UPDATE s_task SET state=if(state=1,0,1) WHERE b_task_id IN ('.implode(', ', $data).')')->execute();
+		// $state = \Yii::$app->db->createCommand('UPDATE s_task SET state=if(state=1,0,1) WHERE b_task_id IN ('.implode(', ', $data).')')->execute();
 
 		if($state)
 			return static::renderJson([$data],1,200,'删除成功');
@@ -112,7 +117,7 @@ class BTaskController extends BaseController
 		$model = new BTaskForm();
 		//先保存用户源数据，以确保用户未修改的信息不变
 		$formdata = $this->
-			loadModelValue($group,$form,['name','end_date','is_finished','finished_time','user_id','type_id','group_id','desc','state',]);
+			loadModelValue($group,$form,['name','end_date','parent_id','is_finished','finished_time','user_id','type_id','group_id','desc','state',]);
 		
 		//在把用户要修改的字段及信息到进来
 		if($model->load($formdata)){
@@ -123,6 +128,7 @@ class BTaskController extends BaseController
 			isset($signform['finished_time']) and ($model->finished_time = $signform['finished_time']);
 			isset($signform['user_id']) and ($model->user_id = $signform['user_id']);
 			isset($signform['type_id']) and ($model->type_id = $signform['type_id']);
+			isset($signform['parent_id']) and ($model->type_id = $signform['parent_id']);
 			isset($signform['state']) and ($model->state = $signform['state']);
 			isset($signform['desc']) and ($model->desc = $signform['desc']);
 

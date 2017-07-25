@@ -21,9 +21,13 @@ class BTask extends ActiveRecord
 		if(!$users)
 			return null;
 		$ids = ArrayHelper::getColumn($users,'user_id');
-		$tasks = static::findAll(['user_id'=>$ids]);
-		return $tasks;
-
+		$tasks = static::findAll(['user_id'=>$ids,'parent_id'=>0]);
+		if(!$tasks)
+			return null;
+		$c_ids = ArrayHelper::getColumn($tasks,'id');
+		// print_r($c_ids);die;
+		$child_tasks=static::find()->select('*')->where('parent_id in ('.implode( ",",$c_ids).")")->all();
+		return [$tasks,$child_tasks];
 	}
 
 	public function getUsers(){

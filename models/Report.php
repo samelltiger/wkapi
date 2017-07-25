@@ -3,11 +3,11 @@ namespace wkapi\models;
 
 use yii\db\ActiveRecord;
 
-class MonthPlan extends ActiveRecord
+class Report extends ActiveRecord
 {
 	
 	public static function tablename(){
-		return "month_plan";
+		return "report";
 	}
 
 	
