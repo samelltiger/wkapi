@@ -10,4 +10,12 @@ class SorceController extends BaseController
 {
 	public $modelClass = 'wkapi\models\Sorce';
 
+	public function actions(){
+		return [
+			'index'=>[
+				'class'=>'wkapi\actions\IndexAction',
+                'modelClass' => $this->modelClass,
+			],
+		];
+	}
 }

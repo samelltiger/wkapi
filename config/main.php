@@ -40,7 +40,7 @@ return [
             ],
         ],
         'errorHandler' => [
-            'errorAction' => 'site/error',
+            'errorAction' => 'user/error',
         ],
         'urlManager' =>[
             'enablePrettyUrl' => true,
@@ -49,18 +49,29 @@ return [
             'rules' => [
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => ['v1/goods','users','b-task'],
+                    'controller' => [
+                            'b-task','department', 'group', 'month-plan', 'month-report',
+                            'quarter-plan', 'quarter-report', 'role', 'role-rule', 'rule', 
+                            'sorce', 's-task', 'task-check', 'task-type', 'user', 'user-department', 
+                            'user-group', 'user-role', 'week-plan', 'week-report'
+                            ],
                     'extraPatterns' => [
-                            'GET index' => 'index',
-                            'GET test' => 'test',
-                    //     'POST login' =>'login',
-                    //     'POST insert' => 'user',
-                    //     'GET user-profile' => 'user-profile',
-                    //     'DELETE test' => 'test',               //用于测试
-                    //     "GET test/<id:\d+>" => 'test',               //用于测试
-                    //     'GET <id:\d+>' => 'get-one',               //用于测试
-                    //     // 'GET /' => 'get-all',               //用于测试
-                    //     "GET <email:[\w\d_-]+@[\w\d_-]+(\.[\w\d_-]+)+$>" => 'get-one',
+                            'GET ccc' => 'ccc',         //测试
+                            'GET test' => 'testa',       //测试
+                            // 'GET ' => 'get-all',
+                            "GET <email:[\w\d_-]+@[\w\d_-]+(\.[\w\d_-]+)+$>" => 'get-one',
+                            'GET <id:\d+>' => 'get-one',
+                            'POST ' => 'add',
+                            'DELETE ' => 'del',
+                            'PUT '  =>  'change',
+                            // 'POST signin' => 'signin',
+                        // 'POST login' =>'login',
+                        // 'POST insert' => 'user',
+                        // 'GET user-profile' => 'user-profile',
+                        // 'DELETE test' => 'test',               //用于测试
+                        // "GET test/<id:\d+>" => 'test',               //用于测试
+                        // 'GET <id:\d+>' => 'get-one',               //用于测试
+                        // // 'GET /' => 'get-all',               //用于测试
                     //     // 'GET user/<username:\.+>' => 'get-one',               //用于测试
                     //     'POST signin'  =>'signin',    //增加一个用户  (注册)
                     //     'POST login'   =>"login",     //登录

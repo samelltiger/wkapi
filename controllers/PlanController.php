@@ -6,9 +6,9 @@ use wkapi\controllers\common\BaseController;
 use yii\filters\auth\QueryParamAuth;
 use yii\helpers\ArrayHelper;
 
-class RoleController extends BaseController
+class PlanController extends BaseController
 {
-	public $modelClass = 'wkapi\models\Role';
+	public $modelClass = 'wkapi\models\Plan';
 
 	public function actions(){
 		return [

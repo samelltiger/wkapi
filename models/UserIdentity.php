@@ -14,7 +14,7 @@ class UserIdentity extends ActiveRecord implements \yii\web\IdentityInterface{
 	}
 
 	public static function findIdentityByAccessToken($token,$type=null){
-		return static::findOne(['accessToken'=>$token,'state'=>1]);
+		return static::findOne(['token'=>$token]);
 	}
 
 	public static function findByUsername($username,$state=1){
@@ -22,7 +22,7 @@ class UserIdentity extends ActiveRecord implements \yii\web\IdentityInterface{
 	}
 
 	public static function findByEmail($email,$state=1){
-		return static::findOne(['email'=>$email,'state'=>$state]);
+		return static::findOne(['email'=>$email]);
 	}
 
 	public function getId(){
@@ -51,8 +51,8 @@ class UserIdentity extends ActiveRecord implements \yii\web\IdentityInterface{
 		// return $this->save();
 	}
 
-	public function generatewkapiToken(){
-		$this->accessToken = \Yii::$app->security->generateRandomString()."_".time();
+	public static function generatewkapiToken(){
+		return  \Yii::$app->security->generateRandomString()."_".time();
 	}
 
 	public static function apiTokenIsValid($token){

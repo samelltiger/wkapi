@@ -1,0 +1,1 @@
+'btask','department','group','monthplan','monthreport','quarterplan','quarterreport','role','rolerule','rule','sorce','stask','taskcheck','tasktype','user','userdepartment','usergroup','userrole','weekplan','weekreport',

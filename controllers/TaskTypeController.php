@@ -10,4 +10,12 @@ class TaskTypeController extends BaseController
 {
 	public $modelClass = 'wkapi\models\TaskType';
 
+	public function actions(){
+		return [
+			'index'=>[
+				'class'=>'wkapi\actions\IndexAction',
+                'modelClass' => $this->modelClass,
+			],
+		];
+	}
 }
