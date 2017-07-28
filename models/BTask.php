@@ -20,6 +20,7 @@ class BTask extends ActiveRecord
 		$users = UserGroup::find()->select('user_id')->where(['group_id'=>$group_id])->distinct()->all();
 		if(!$users)
 			return null;
+		// print_r($users);die;
 		$ids = ArrayHelper::getColumn($users,'user_id');
 		$tasks = static::findAll(['user_id'=>$ids,'parent_id'=>0]);
 		if(!$tasks)
